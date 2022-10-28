@@ -1,0 +1,8 @@
+<h2>投稿一覧</h2>
+<% @comics.each do |comic| %>
+<div>
+  <%= attachment_image_tag comic, :image %>
+  <p>投稿ユーザー画像：<%= image_tag('sample-author1.jpg') %></p>
+  <p>ユーザーネーム：<%= comic.user.name %></p>
+</div>
+<% end %>
