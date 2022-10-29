@@ -7,7 +7,7 @@ class ComicsController < ApplicationController
    @comic=Comic.new(comic_params)
    @comic.user_id=current_user.id
    @comic.save
-   redrect_to comics_path
+   redirect_to comics_path
   end
   
   def index
@@ -15,6 +15,13 @@ class ComicsController < ApplicationController
   end
 
   def show
+    @comic=Comic.find(params[:id])
+  end
+  
+  def destroy
+     @comic=Comic.find(params[:id])
+     @comic.destroy
+     redirect_to comics_path
   end
 
   def edit
@@ -23,7 +30,7 @@ class ComicsController < ApplicationController
   def update
   end
   
-   private
+  private
 
   def comic_params
     params.require(:comic).permit(:title, :image, :body)

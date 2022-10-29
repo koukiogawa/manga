@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :comics, only: [:show, :edit, :update, :index, :create, :new]
+  resources :comics
   devise_for :users
   root to: 'homes#top'
   

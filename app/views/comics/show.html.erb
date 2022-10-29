@@ -1,2 +1,10 @@
-<h1>Comics#show</h1>
-<p>Find me in app/views/comics/show.html.erb</p>
+<div>
+  <p>タイトル：<%= @comic.title %></p>
+  <%= attachment_image_tag @comic, :image %>
+  <p>投稿ユーザー画像：</p>
+  <p>ユーザーネーム：<%= @comic.user.name %></p>
+  <p>投稿日：<%= @comic.created_at.strftime('%Y/%m/%d') %></p>
+  <% if @comic.user == current_user %>
+    <%= link_to "削除", comic_path(@comic.id), method: :delete %>
+  <% end %>
+</div>
