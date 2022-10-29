@@ -11,11 +11,12 @@ class ComicsController < ApplicationController
   end
   
   def index
-   @comics=Comic.all
+   @comics=Comic.page(params[:page]).reverse_order
   end
 
   def show
     @comic=Comic.find(params[:id])
+    @comment=Comment.new
   end
   
   def destroy
