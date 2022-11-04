@@ -6,8 +6,11 @@ class ComicsController < ApplicationController
   def create
    @comic=Comic.new(comic_params)
    @comic.user_id=current_user.id
-   @comic.save
-   redirect_to comics_path
+   if @comic.save
+    redirect_to comics_path
+   else
+     render :new
+   end 
   end
   
   def index
