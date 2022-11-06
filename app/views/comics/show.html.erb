@@ -1,44 +1,76 @@
-<div>
-  <p>タイトル：<%= @comic.title %></p>
-  <%= attachment_image_tag @comic, :image %>
-  <p>投稿ユーザー画像：</p>
-  <p>ユーザーネーム：<%= @comic.user.name %></p>
-  <p>投稿日：<%= @comic.created_at.strftime('%Y/%m/%d') %></p>
-  <% if @comic.user == current_user %>
-    <%= link_to "削除", comic_path(@comic.id), method: :delete %>
-  <% end %>
+
+
+<div class="container w-50 mx-auto mt-3 ">
+    <div class="row mx-auto border border-info mt-3">
+        <div class="col-4">
+          <p>タイトル:<%= @comic.title %></p>
+          <p><%= attachment_image_tag @comic, :image, size: "100x100", fallback: "no_image.jpg" %></p>
+          <p>投稿者:<%= @comic.user.name %></p>
+          <p><%= attachment_image_tag @comic.user, :profile_image, :fill, 50, 50,fallback: "no_image.jpg" %></p>
+        </div>
+        <div class="col-8">
+          <p>
+            内容紹介 
+          </p>
+          <p><%= @comic.body %></p>
+          <p>投稿日：<%= @comic.created_at.strftime('%Y/%m/%d') %></p>
+        </div>
+    </div>
+    <div class="row mx-auto">
+      <p class="pr-3">コメント件数：<%= @comic.comments.count %></p>
+      <p>
+        <% if @comic.favorited_by?(current_user) %>
+          <p>
+            <%= link_to comic_favorites_path(@comic), method: :delete do %>
+              ♥<%= @comic.favorites.count %> いいね
+            <% end %>
+          </p>
+          <% else %>
+          <p>
+            <%= link_to comic_favorites_path(@comic), method: :post do %>
+              ♡<%= @comic.favorites.count %> いいね
+            <% end %>
+          </p>
+        <% end %>
+      </p>
+      <p class="pl-3">
+        投稿を
+        <% if @comic.user == current_user %>
+         <%= link_to "編集", comic_path(@comic.id) %>・
+         <%= link_to "削除", comic_path(@comic.id), method: :delete %>
+        <% end %>
+      </p>
+    </div>
+    <% @comic.comments.each do |comment| %>
+      <div class="row mx-auto border border-secondary mb-3">
+        <div class="col-3">
+          <p>
+            <%= comment.user.name %>
+            <%= attachment_image_tag comment.user, :profile_image, :fill, 50, 50,fallback: "no_image.jpg" %>
+          </p>
+        </div>
+        <div class="col-6"><%= comment.comment %></div>
+        <div class="col-3">
+          <p>投稿日:<%= comment.created_at.strftime('%Y/%m/%d') %></p>
+          <% if comment.user == current_user %>
+            <div>
+            　<%= link_to "コメントを削除", comic_comment_path(comment.comic, comment), method: :delete %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="row">
+      <div class="col-12">
+        <%= form_with(model:[@comic, @comment], local: true) do |f| %>
+          <%= f.text_area :comment, class:"form-control", rows:'5',placeholder: "コメントをここに" %>
+          <%= f.submit "送信する" %>
+        <% end %>
+      </div>
+    </div>
 </div>
 
-<div>
-<p>コメント件数：<%= @comic.comments.count %></p>
-<% @comic.comments.each do |comment| %>
-  <%= comment.user.name %>
-  <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
-  <% if comment.user == current_user %>
-  <div>
-    <%= link_to "削除", comic_comment_path(comment.comic, comment), method: :delete %>
-  </div>
-  <% end %>
-<% end %>
-</div>
+  
+  
 
-<div>
-<%= form_with(model:[@comic, @comment], local: true) do |f| %>
-  <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに" %>
-  <%= f.submit "送信する" %>
-<% end %>
-</div>
 
-<% if @comic.favorited_by?(current_user) %>
-    <p>
-      <%= link_to comic_favorites_path(@comic), method: :delete do %>
-        ♥<%= @comic.favorites.count %> いいね
-      <% end %>
-    </p>
-    <% else %>
-    <p>
-      <%= link_to comic_favorites_path(@comic), method: :post do %>
-        ♡<%= @comic.favorites.count %> いいね
-      <% end %>
-    </p>
-  <% end %>

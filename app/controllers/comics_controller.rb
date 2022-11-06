@@ -15,6 +15,7 @@ class ComicsController < ApplicationController
   
   def index
    @comics=Comic.page(params[:page]).reverse_order
+   
   end
 
   def show

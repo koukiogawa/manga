@@ -6,15 +6,24 @@
   <% end %>
 </div>
 
-<h2>投稿一覧</h2>
-<% @comics.each do |comic| %>
-<div>
-  <p>タイトル：<%= comic.title %></p>
-  <%= attachment_image_tag comic, :image %>
-  <p>投稿ユーザー画像：<%= attachment_image_tag comic.user, :profile_image, :fill, 60, 60,fallback: "no_image.jpg" %></p>
-  <p>ユーザーネーム：<%= comic.user.name %></p>
-  <p>投稿日：<%= comic.created_at.strftime('%Y/%m/%d') %></p>
-  <p><%= link_to "#{comic.comments.count} コメント", comic_path(comic.id) %></p>
+<div class="container w-50 mx-auto ">
+  <% @comics.each do |comic| %>
+    <div class="row mx-auto border border-info mb-3">
+        <div class="col-4">
+          <p>タイトル:<%= link_to comic_path(comic.id) do %><%= comic.title %><% end %></p>
+          <p><%= attachment_image_tag comic, :image, size: "100x100", fallback: "no_image.jpg" %></p>
+          <p>投稿者:<%= comic.user.name %></p>
+          <p><%= attachment_image_tag comic.user, :profile_image, :fill, 50, 50,fallback: "no_image.jpg" %></p>
+        </div>
+        <div class="col-8">
+          <p>内容紹介</p>
+          <p><%= comic.body %></p>
+          <p>投稿日：<%= comic.created_at.strftime('%Y/%m/%d') %></p>
+          <p><%= link_to "#{comic.comments.count} コメント", comic_path(comic.id) %></p>
+          <p><%= link_to "#{comic.comments.count} いいね", comic_path(comic.id) %></p>
+        </div>
+    </div>
+    <%= paginate @comics %>
+  <% end %>
 </div>
-<% end %>
-<%= paginate @comics %>
+
