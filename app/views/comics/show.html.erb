@@ -36,7 +36,7 @@
       <p class="pl-3">
         投稿を
         <% if @comic.user == current_user %>
-         <%= link_to "編集", comic_path(@comic.id) %>・
+         <%= link_to "編集", edit_comic_path(@comic.id) %>・
          <%= link_to "削除", comic_path(@comic.id), method: :delete %>
         <% end %>
       </p>

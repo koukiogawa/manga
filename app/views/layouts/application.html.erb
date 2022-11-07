@@ -23,6 +23,9 @@
              <i class="fas fa-home"></i><%= link_to "マイページ", user_path(current_user.id), class: 'text-light' %>
           </li>
           <li  class="nav-item nav-link text-light">
+             <i class="fa fa-clipboard" aria-hidden="true"></i><%= link_to "投稿する", new_comic_path, class: 'text-light' %>
+          </li>
+          <li  class="nav-item nav-link text-light">
             <i class="fas fa-book-open"></i><%= link_to "マンガ一覧", comics_path, class: 'text-light' %>
           </li>
           <li  class="nav-item nav-link text-light">

@@ -1,12 +1,13 @@
-<div>
-  <h3><%= @user.name %></h3>
-  <%= attachment_image_tag @user, :profile_image, :fill, 60, 60,fallback: "no_image.jpg" %>
-  <% if @user.id == current_user.id %>
-    <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
-  <% end %>
-</div>
 
 <div class="container w-50 mx-auto ">
+  <div class="row">
+    <h3><%= @user.name %></h3>
+    <%= @user.introduction %>
+    <%= attachment_image_tag @user, :profile_image, :fill, 60, 60,fallback: "no_image.jpg" %>
+    <% if @user.id == current_user.id %>
+      <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
+    <% end %>
+  </div>
   <% @comics.each do |comic| %>
     <div class="row mx-auto border border-info mb-3">
         <div class="col-4">
