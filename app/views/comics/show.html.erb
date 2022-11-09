@@ -5,7 +5,7 @@
         <div class="col-4">
           <p>タイトル:<%= @comic.title %></p>
           <p><%= attachment_image_tag @comic, :image, size: "100x100", fallback: "no_image.jpg" %></p>
-          <p>投稿者:<%= @comic.user.name %></p>
+          <p>投稿者:<%= link_to user_path(@comic.user.id) do %><%= @comic.user.name %><% end %></p>
           <p><%= attachment_image_tag @comic.user, :profile_image, :fill, 50, 50,fallback: "no_image.jpg" %></p>
         </div>
         <div class="col-8">
@@ -34,8 +34,9 @@
         <% end %>
       </p>
       <p class="pl-3">
-        投稿を
+        
         <% if @comic.user == current_user %>
+         投稿を
          <%= link_to "編集", edit_comic_path(@comic.id) %>・
          <%= link_to "削除", comic_path(@comic.id), method: :delete %>
         <% end %>

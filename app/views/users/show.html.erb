@@ -1,20 +1,25 @@
 
 <div class="container w-50 mx-auto ">
-  <div class="row">
-    <h3><%= @user.name %></h3>
-    <%= @user.introduction %>
-    <%= attachment_image_tag @user, :profile_image, :fill, 60, 60,fallback: "no_image.jpg" %>
-    <% if @user.id == current_user.id %>
-      <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
-    <% end %>
+  <div class="row mx-auto border border-dark rounded my-3">
+    <div class="col-9">
+      <p><strong>ユーザ名</strong>:<%= @user.name %></p>
+      <p><strong>自己紹介</strong>:<%= @user.introduction %></p>
+    </div>
+    
+    <div class="col-3">
+      <%= attachment_image_tag @user, :profile_image, :fill, 60, 60,fallback: "no_image.jpg" %>
+      <% if @user.id == current_user.id %>
+        <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
+      <% end %>
+    </div>
   </div>
   <% @comics.each do |comic| %>
     <div class="row mx-auto border border-info mb-3">
         <div class="col-4">
           <p>タイトル:<%= link_to comic_path(comic.id) do %><%= comic.title %><% end %></p>
-          <p><%= attachment_image_tag comic, :image, size: "100x100", fallback: "no_image.jpg" %></p>
+          <p><%= attachment_image_tag comic, :image, size: "100x100" %></p>
           <p>投稿者:<%= comic.user.name %></p>
-          <p><%= attachment_image_tag comic.user, :profile_image, :fill, 50, 50,fallback: "no_image.jpg" %></p>
+          <p><%= attachment_image_tag comic.user, :profile_image, :fill, 50, 50, fallback: "no_image.jpg" %></p>
         </div>
         <div class="col-8">
           <p>内容紹介</p>

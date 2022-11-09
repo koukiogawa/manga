@@ -5,7 +5,7 @@
         <div class="col-4">
           <p>タイトル:<%= link_to comic_path(comic.id) do %><%= comic.title %><% end %></p>
           <p><%= attachment_image_tag comic, :image, size: "100x100", fallback: "no_image.jpg" %></p>
-          <p>投稿者:<%= comic.user.name %></p>
+          <p>投稿者:<%= link_to user_path(comic.user.id) do %><%= comic.user.name %><% end %></p>
           <p><%= attachment_image_tag comic.user, :profile_image, :fill, 50, 50,fallback: "no_image.jpg" %></p>
         </div>
         <div class="col-8">

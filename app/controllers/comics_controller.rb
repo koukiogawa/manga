@@ -15,7 +15,7 @@ class ComicsController < ApplicationController
   
   def index
    @comics=Comic.page(params[:page]).reverse_order
-   
+   @user=User.find(current_user.id)
   end
 
   def show
@@ -30,9 +30,13 @@ class ComicsController < ApplicationController
   end
 
   def edit
+    @comic=Comic.find(params[:id])
   end
   
   def update
+     @comic=Comic.find(params[:id])
+     @comic.update(comic_params)
+     redirect_to comic_path(@comic.id)
   end
   
   private
